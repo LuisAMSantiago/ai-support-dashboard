@@ -30,7 +30,7 @@ Project overview and architecture: https://github.com/LuisAMSantiago/ai-support-
 2. `npm run dev`
 
 ## Environment variables
-Create a `frontend/.env` file (or `.env` at the frontend root) if you want to point to a different API:
+Create a `.env` file at the frontend root (frontend/.env):
 ```
 VITE_API_URL=http://127.0.0.1:8000
 ```
