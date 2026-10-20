@@ -4,6 +4,8 @@ import { authService } from '@/services/authService';
 import type { LoginCredentials, User } from '@/types';
 import { toast } from 'sonner';
 import { useEffect } from 'react';
+import { isAxiosError } from 'axios';
+import { getApiErrorMessage } from '@/lib/apiError';
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
@@ -19,8 +21,8 @@ export const useAuth = () => {
   // Handle 401 errors - redirect to login if not already there
   useEffect(() => {
     if (meQuery.isError) {
-      const error = meQuery.error as any;
-      if (error?.response?.status === 401) {
+      const error = meQuery.error;
+      if (isAxiosError(error) && error.response?.status === 401) {
         const isLoginPage = window.location.pathname === '/login';
         if (!isLoginPage) {
           // Clear cache and redirect
@@ -41,9 +43,8 @@ export const useAuth = () => {
       toast.success('Login realizado com sucesso!');
       navigate('/tickets', { replace: true });
     },
-    onError: (error: any) => {
-      const message = error.response?.data?.message || 'Erro ao realizar login';
-      toast.error(message);
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Erro ao realizar login'));
     },
   });
 

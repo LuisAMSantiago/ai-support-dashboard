@@ -85,13 +85,14 @@ const getActivityLabel = (
       return 'Ticket atualizado';
     case 'status_changed':
       return subtype === 'closed' ? 'Ticket fechado' : 'Ticket reaberto';
-    case 'ai_done':
+    case 'ai_done': {
       const aiLabels: Record<string, string> = {
         summary: 'Resumo AI',
         reply: 'Resposta AI',
         priority: 'Prioridade AI',
       };
       return aiType ? aiLabels[aiType] || 'AI concluído' : 'AI concluído';
+    }
     default:
       return 'Evento';
   }

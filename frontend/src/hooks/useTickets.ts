@@ -3,6 +3,7 @@ import { ticketService } from '@/services/ticketService';
 import type { TicketFilters, CreateTicketData, UpdateTicketData, AiJobStatus } from '@/types';
 import { toast } from 'sonner';
 import { useEffect, useRef } from 'react';
+import { getApiErrorMessage } from '@/lib/apiError';
 
 export const useTickets = (filters: TicketFilters = {}) => {
   return useQuery({
@@ -48,9 +49,8 @@ export const useCreateTicket = () => {
       queryClient.invalidateQueries({ queryKey: ['tickets'] });
       toast.success('Ticket criado com sucesso!');
     },
-    onError: (error: any) => {
-      const message = error.response?.data?.message || 'Erro ao criar ticket';
-      toast.error(message);
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Erro ao criar ticket'));
     },
   });
 };
@@ -66,9 +66,8 @@ export const useUpdateTicket = () => {
       queryClient.invalidateQueries({ queryKey: ['tickets', id] });
       toast.success('Ticket atualizado com sucesso!');
     },
-    onError: (error: any) => {
-      const message = error.response?.data?.message || 'Erro ao atualizar ticket';
-      toast.error(message);
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Erro ao atualizar ticket'));
     },
   });
 };
@@ -82,9 +81,8 @@ export const useDeleteTicket = () => {
       queryClient.invalidateQueries({ queryKey: ['tickets'] });
       toast.success('Ticket excluído com sucesso!');
     },
-    onError: (error: any) => {
-      const message = error.response?.data?.message || 'Erro ao excluir ticket';
-      toast.error(message);
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Erro ao excluir ticket'));
     },
   });
 };
@@ -99,9 +97,8 @@ export const useEnqueueSummary = () => {
       queryClient.invalidateQueries({ queryKey: ['tickets', id] });
       toast.success('Resumo IA solicitado!');
     },
-    onError: (error: any) => {
-      const message = error.response?.data?.message || 'Erro ao solicitar resumo';
-      toast.error(message);
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Erro ao solicitar resumo'));
     },
   });
 };
@@ -115,9 +112,8 @@ export const useEnqueueReply = () => {
       queryClient.invalidateQueries({ queryKey: ['tickets', id] });
       toast.success('Resposta IA solicitada!');
     },
-    onError: (error: any) => {
-      const message = error.response?.data?.message || 'Erro ao solicitar resposta';
-      toast.error(message);
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Erro ao solicitar resposta'));
     },
   });
 };
@@ -131,9 +127,8 @@ export const useEnqueuePriority = () => {
       queryClient.invalidateQueries({ queryKey: ['tickets', id] });
       toast.success('Classificação IA solicitada!');
     },
-    onError: (error: any) => {
-      const message = error.response?.data?.message || 'Erro ao solicitar classificação';
-      toast.error(message);
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Erro ao solicitar classificação'));
     },
   });
 };

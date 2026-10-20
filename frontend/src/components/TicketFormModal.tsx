@@ -31,7 +31,7 @@ const createTicketSchema = z.object({
 const updateTicketSchema = z.object({
   title: z.string().min(1, 'Título é obrigatório').max(255, 'Título muito longo'),
   description: z.string().min(1, 'Descrição é obrigatória'),
-  priority: z.enum(['low', 'medium', 'high']).optional().nullable(),
+  priority: z.enum(['low', 'medium', 'high']).optional(),
   status: z.enum(['open', 'in_progress', 'waiting', 'resolved', 'closed']),
 });
 
@@ -94,7 +94,7 @@ export const TicketFormModal = ({
   };
 
   const currentPriority = watch('priority');
-  const currentStatus = watch('status' as any);
+  const currentStatus = watch('status');
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -164,7 +164,7 @@ export const TicketFormModal = ({
                 <Select
                   value={currentStatus || 'open'}
                   onValueChange={(value) =>
-                    setValue('status' as any, value as TicketStatus)
+                    setValue('status', value as TicketStatus)
                   }
                 >
                   <SelectTrigger className="bg-background border-border">

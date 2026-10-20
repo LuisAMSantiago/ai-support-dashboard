@@ -142,7 +142,7 @@ export type TicketEventType =
 export interface TicketEventMeta {
   before?: TicketStatus;
   after?: TicketStatus;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface TicketEventUser {

@@ -19,7 +19,11 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      // shadcn/ui exposes these stable style factories and hooks alongside components.
+      "react-refresh/only-export-components": ["warn", {
+        allowConstantExport: true,
+        allowExportNames: ["badgeVariants", "buttonVariants", "useFormField", "navigationMenuTriggerStyle", "useSidebar", "toggleVariants"],
+      }],
       "@typescript-eslint/no-unused-vars": "off",
     },
   },

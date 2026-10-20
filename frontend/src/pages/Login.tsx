@@ -11,6 +11,7 @@ import { Sparkles, Mail, Lock, Loader2, User } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
 import { authService } from '@/services/authService';
 import { toast } from 'sonner';
+import { getApiErrorMessage } from '@/lib/apiError';
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -71,9 +72,8 @@ const Login = () => {
       toast.success('Conta criada com sucesso! Faça login para continuar.');
       setIsRegisterMode(false);
       registerForm.reset();
-    } catch (error: any) {
-      const message = error.response?.data?.meta?.message || error.response?.data?.message || 'Erro ao criar conta';
-      toast.error(message);
+    } catch (error: unknown) {
+      toast.error(getApiErrorMessage(error, 'Erro ao criar conta'));
     } finally {
       setIsRegistering(false);
     }

@@ -30,7 +30,7 @@ class UpdateTicketRequest extends FormRequest
             'priority' => ['sometimes', 'nullable', 'string', Rule::in(['low', 'medium', 'high'])],
 
             // importante por causa da regra do closed_at no controller
-            'status' => ['sometimes', 'required', 'string', Rule::in(['open', 'in_progress', 'resolved', 'closed'])],
+            'status' => ['sometimes', 'required', 'string', Rule::in(['open', 'in_progress', 'waiting', 'resolved', 'closed'])],
         ];
     }
 

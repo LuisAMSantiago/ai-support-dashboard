@@ -34,7 +34,7 @@ class ClassifyTicketPriorityTest extends TestCase
         });
 
         $ticket = Ticket::factory()->create([
-            'priority' => null,
+            'priority' => 'medium',
             'ai_priority_status' => 'queued',
         ]);
 
@@ -45,5 +45,11 @@ class ClassifyTicketPriorityTest extends TestCase
 
         $this->assertSame('high', $ticket->priority);
         $this->assertSame('done', $ticket->ai_priority_status);
+        $this->assertDatabaseHas('ticket_events', [
+            'ticket_id' => $ticket->id,
+            'type' => 'ai_priority_done',
+        ]);
+        $event = $ticket->events()->where('type', 'ai_priority_done')->sole();
+        $this->assertSame(['before' => 'medium', 'after' => 'high'], $event->meta);
     }
 }

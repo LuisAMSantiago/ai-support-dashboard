@@ -3,6 +3,10 @@
 **AI Support Dashboard** is a full stack support ticket system designed with a modern SPA + API architecture.  
 The application provides authenticated access, ticket management, activity tracking, analytics, and AI-assisted automation integrated into the support workflow.
 
+**Project status: Escopo técnico concluído (demonstrative project).**
+The baseline, acceptance commands, and delivery boundaries are defined in
+[Demonstrative scope](DEMONSTRATIVE_SCOPE.md), completed on October 20, 2026.
+
 ---
 
 ## Project Overview
@@ -123,7 +127,36 @@ Then set this in `\config\services.php`:
 
 ## Project scope
 
-This project is not intended to be a production-ready product.
+The demonstrative baseline is implemented and verified. See
+[DEMONSTRATIVE_SCOPE.md](DEMONSTRATIVE_SCOPE.md) for the included features,
+acceptance criteria, and explicit exclusions. Future features are new scope;
+defects in the existing baseline remain fixes.
+
+This project is not intended to be a production-ready product. This status does
+not claim deployment, adoption by real users, or ongoing operational maintenance.
+
+## Verification
+
+Backend (PHP 8.3+ with PDO SQLite for tests):
+
+```sh
+cd backend
+composer install
+composer test
+```
+
+Frontend (Node.js 20+):
+
+```sh
+cd frontend
+npm ci
+npm run check
+```
+
+The frontend check runs lint (zero warnings), TypeScript, Vitest and a production
+build. Frontend tests use a simulated HTTP transport; backend tests use an
+in-memory database. External AI calls and production deployment are excluded
+from automated acceptance.
 
 ---
 

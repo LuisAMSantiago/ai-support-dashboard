@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ticketService } from '@/services/ticketService';
 import type { TicketFilters } from '@/types';
 import { toast } from 'sonner';
+import { getApiErrorMessage } from '@/lib/apiError';
 
 export function useTrashedTickets(filters: TicketFilters = {}) {
   return useQuery({
@@ -21,9 +22,8 @@ export function useRestoreTicket() {
       queryClient.invalidateQueries({ queryKey: ['tickets'] });
       toast.success('Ticket restaurado com sucesso!');
     },
-    onError: (error: any) => {
-      const message = error.response?.data?.meta?.message || error.response?.data?.message || 'Erro ao restaurar ticket';
-      toast.error(message);
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Erro ao restaurar ticket'));
     },
   });
 }
@@ -37,9 +37,8 @@ export function useForceDeleteTicket() {
       queryClient.invalidateQueries({ queryKey: ['trashed-tickets'] });
       toast.success('Ticket excluído permanentemente!');
     },
-    onError: (error: any) => {
-      const message = error.response?.data?.meta?.message || error.response?.data?.message || 'Erro ao excluir ticket permanentemente';
-      toast.error(message);
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Erro ao excluir ticket permanentemente'));
     },
   });
 }
